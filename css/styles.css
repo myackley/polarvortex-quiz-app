@@ -72,9 +72,25 @@ div, :before, :after {
 .offset_left_12-12 {margin-left: 91.54%;}
 
 
+/* ================
+======= base ======
+==================*/
+body {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  transition: all 100ms ease;
+}
+a {text-decoration: none;}
+ol, ul {list-style-type: none; padding: 0; margin: 0;}
 
-
-
+/* background */
+.winterbg {
+  background: url(../img/winter-bg.jpg) 0 0 #fff repeat-x;
+}
+.thawedbg {
+  background: url(../img/thawed-bg.jpg) 0 0 #4e8a4f repeat-x;
+}
 
 
 /* ================
