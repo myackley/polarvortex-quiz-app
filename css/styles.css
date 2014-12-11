@@ -2,7 +2,7 @@
 div, :before, :after {
   box-sizing: border-box;
 }
-
+ 
 /* overall container */
 .grid {max-width: 960px; margin: auto;}
 
