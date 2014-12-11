@@ -1,0 +1,127 @@
+/* the asterisk hack has performance issues */
+div, :before, :after {
+  box-sizing: border-box;
+}
+
+/* overall container */
+.grid {max-width: 960px; margin: auto;}
+
+.grid, .row, [class*="col_"] {
+  padding: 0;
+  margin: 0;
+}
+
+.grid:after, .row:after, .share:after, .row:after, .nav-global:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.row {
+  margin-bottom: 1em;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+/* ============
+== init grid ==
+=============*/
+
+[class*="col_"] {
+  float: left;
+  margin-left: 1.5%;
+}
+[class*="col_"]:first-child {
+  margin-left: 0;
+}
+
+.col_1-12 {width: 6.958%;}
+.col_2-12 {width: 15.41%;}
+.col_3-12,
+.col_1-3  {width: 23.87%;}
+.col_4-12,
+.col_1-4  {width: 32.33%;}
+.col_5-12 {width: 40.79%;}
+.col_6-12,
+.col_1-2  {width: 49.25%;}
+.col_7-12 {width: 57.70%;}
+.col_8-12, 
+.col_2-3  {width: 66.16%;}
+.col_9-12 {width: 74.62%;}
+.col_10-12,
+.col_3-4  {width: 83.08%;}
+.col_11-12 {width: 91.54%;}
+.col_12-12 {width: 100%;}
+
+/* ============
+=== offsets ===
+=============*/
+
+.offset_left_1-12 {margin-left: 6.958%;}
+.offset_left_2-12 {margin-left: 15.41%;}
+.offset_left_3-12 {margin-left: 23.87%;}
+.offset_left_4-12 {margin-left: 32.33%;}
+.offset_left_5-12 {margin-left: 40.79%;}
+.offset_left_6-12 {margin-left: 49.25%;}
+.offset_left_7-12 {margin-left: 57.70%;}
+.offset_left_8-12 {margin-left: 66.16%;}
+.offset_left_9-12 {margin-left: 74.62%;}
+.offset_left_10-12 {margin-left: 83.08%;}
+.offset_left_12-12 {margin-left: 91.54%;}
+
+
+
+
+
+
+
+/* ================
+== media queries ==
+==================*/
+@media all and (max-width: 480px) {
+  /* establish columns */
+  [class*="col_"] {
+    width: 100%;
+    margin-bottom: 1em;
+    margin-left: 0;
+  }
+  .row:last-child > [class*="col_"]:last-child {
+    margin-bottom: 0;
+  }
+  [class*="offset_"] {
+    margin-left: 0;
+  }
+  .row {
+    margin: 0;
+  }
+  .grid {
+    margin-top: 50px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  /* cols */
+  [class*="col_"] {
+    width: 100%;
+    margin-bottom: 1em;
+    margin-left: 0;
+  }
+  .row:last-child > [class*="col_"]:last-child {
+    margin-bottom: 0;
+  }
+  [class*="offset_"] {
+    margin-left: 0;
+  }
+  .row {
+    margin: 0;
+  }
+  .grid {
+    margin-top: 60px;
+  }
+}
+
+@media all and (min-width: 991px) {
+  /* establish columns */
+}
