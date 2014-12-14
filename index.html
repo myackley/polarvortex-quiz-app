@@ -9,38 +9,52 @@
 </head>
 <body class="winterbg">
 	
-	<div class="quiz-container">
+	<!-- <div class="quiz-container"> -->
 
-		<div class="grid">
+		<div class="quiz grid">
 			<div class="col_1-3">
 				<!-- title, description, source -->
-				<h1>Title</h1>
-				<p>Description</p>
-				<p class="source"><a href="#" target="_blank">Source</a></p>
+				<h1>Polar Vortex Quiz</h1>
+				<p>With all of the hype over the effects of the Polar Vortex in the last two years a lot of people are wondering: what is a polar vortex?</p>
+				<p class="source"><a href="http://en.wikipedia.org/wiki/Polar_vortex" target="_blank">Polar Vortex - Wikipedia</a></p>
 			</div>
 			<div class="col_2-3">
 				<!-- quiz area -->
 				<div class="quiz-area">
 					<!-- question w/ (1/4) -->
-					<p class="quiz_question-number"></p>
-					<h3>Question</h3>
+					
+					<h3>Question <span>1 of 4</span>: The question</h3>
 					
 					<!-- answers -->
 					<ol class="quiz_question-answers">
 						<!-- #! add correct & incorrect classes on submit -->
 						<li class="correct"><p>Correct answer<p></li>
 						<li class="incorrect"><p>Incorrect answer<p></li>
+						<li><p>Answer<p></li>
+						<li><p>Answer<p></li>
 					</ol>
 
-					<button type="button" id="submitAnswer">Submit</button>
+					<button type="button" id="continue">Continue</button>
+
+					<div class="correctfinish">
+						<h2>Congratulations!</h2>
+						<p>You got every question correct!</p>
+						<button type="button" class="playagain">Play again?</button>						
+					</div>
+
+					<div class="missedfinish">
+						<h2>Bummer!</h2>
+						<p>You didn't get all the questions correct.</p>
+						<button type="button" class="playagain">Play again?</button>						
+					</div>
 
 					<!-- thermometer -->
-					<img src="#" alt="Answer questions correctly to raise the temperature">
+					<img src="img/zero-temp.png" alt="Answer questions correctly to raise the temperature">
 				</div>
 			</div>
 		</div>
 
-	</div>
+	<!-- </div> -->
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="js/app.js"></script>
