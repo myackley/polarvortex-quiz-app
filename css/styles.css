@@ -193,6 +193,8 @@ button {
 }
 button:focus {
   -moz-focus-inner: none;
+  outline: none;
+  border: none;
 }
 
 /* layout & theme */

@@ -5,6 +5,9 @@ $(document).ready(function() {
 	var curQ = 1;
 	var numQ = 4; 
 	var thisQ; // current question
+	var questionText = $(".quiz-area h3");
+	var questionChoices = $(".quiz_question-choices");
+	var qnum = curQ = " of " + numQ;
 
 	// establish 'question' class
 	function question(thequestion,choice1,choice2,choice3,choice4,correctChoice,correctBool) {
@@ -27,7 +30,7 @@ $(document).ready(function() {
 		"question1-2",
 		"question1-3",
 		"question1-4",
-		this.choice1,
+		"question1-1 this one",
 		false
 	);
 
@@ -37,7 +40,7 @@ $(document).ready(function() {
 		"question2-2 this one",
 		"question2-3",
 		"question2-4",
-		this.choice2,
+		"question2-2 this one",
 		false
 	);
 
@@ -47,7 +50,7 @@ $(document).ready(function() {
 		"question3-2",
 		"question3-3",
 		"question3-4",
-		this.choice1,
+		"question3-1 this one",
 		false
 	);
 
@@ -57,7 +60,7 @@ $(document).ready(function() {
 		"question4-2",
 		"question4-3 this one",
 		"question4-4",
-		this.choice3,
+		"question4-3 this one",
 		false
 	);
 
@@ -66,20 +69,19 @@ $(document).ready(function() {
 	};
 
 	var startQuiz = function() {
-		var questionText = $(".quiz-area h3");
-		var questionChoices = $(".quiz_question-choices");
-
 		// reset global variables
 		numCorrect = 0;
 		curQ = 1;
 		thisQ = question1;
 
-		// remove choices and question
-		questionText.text("");
-		questionChoices.empty();
-		
+		// remove choices and question and reset image
+		questionText.show().text("");
+		questionChoices.show().empty();
+		$(".quiz-area img").attr("src","img/zero-temp.png");
+		$("body").addClass("winterbg");
+
 		// load question
-		questionText.text(thisQ.thequestion);
+		questionText.append("Question " + qnum + ": " + thisQ.thequestion);
 		questionChoices.append("<li><p>" + thisQ.choice1 + "</p></li>");
 		questionChoices.append("<li><p>" + thisQ.choice2 + "</p></li>");
 		questionChoices.append("<li><p>" + thisQ.choice3 + "</p></li>");
@@ -89,18 +91,33 @@ $(document).ready(function() {
 		console.log("start");
 	};
 
-	var questionCheck = function(picked, correct) {
-		// check answer()
-
-		// set correctBool
-		// changer()
-		changer();
+	var questionCheck = function(p,c) {
 		console.log("checking question...")
-	};
 
-	// change classes and therm pic
-	var changer = function() {
+		// check if correct
+		if (p.text() === c.text()) {
+			thisQ.correctBool = true;
+			p.addClass("correct");
+			console.log("Fuck yeah!");
+			numCorrect++;
+		} else {
+			thisQ.correctBool = false;
+			c.addClass("correct")
+			p.addClass("incorrect");
+			console.log("Aw shit");
+		}
 
+		// swap out graphics
+		if (numCorrect == 1) {
+			$(".quiz-area img").attr("src","img/twenty-temp.png");
+		} else if (numCorrect == 2) {
+			$(".quiz-area img").attr("src","img/fourty-temp.png");
+		} else if (numCorrect == 3) {
+			$(".quiz-area img").attr("src","img/sixty-temp.png");
+		} else if (numCorrect == 4) {
+			$("body").removeClass("winterbg");
+			$("body").addClass("thawedbg");
+		}
 
 		// show Continue
 		$("#continue").show();
@@ -108,10 +125,32 @@ $(document).ready(function() {
 
 	// click Continue to load new question
 	var continueQuiz = function() {
-		// |- remove answers from ordered list
+		curQ++;
+
+		// remove answers from ordered list
+		questionText.text("");
+		questionChoices.empty();
+
 		// |- load new answers
-		// |- if no more questions show 'finish' div
-		console.log("continue quiz");
+		if (thisQ == question1) {
+			thisQ = question2;
+		} else if (thisQ == question2) {
+			thisQ = question3;
+		} else if (thisQ == question3) {
+			thisQ = question4;
+		} else {
+			// |- if no more questions show 'finish' div
+			questionText.hide();
+			questionChoices.hide();
+			$("#continue").hide();
+
+			if (numCorrect === numQ) {
+				$(".correctfinish").show();
+			} else {
+				$(".missedfinish").show();
+			}
+		}
+
 	};
 
 
@@ -123,7 +162,19 @@ $(document).ready(function() {
 	$(".quiz_question-choices > li").click(function() {
 		event.preventDefault();
 
+		var picked = $(this);
+		var correct;
 
+		$(".quiz_question-choices li").each(function() {
+			if ($(this).find("p").text() == thisQ.correctChoice) {
+				correct = $(this);
+			} else {
+				return false;
+			}
+		});
+
+		// set the 'question' object bolean and display continue
+		questionCheck(picked,correct);
 
 	});
 
