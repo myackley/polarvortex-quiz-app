@@ -1,14 +1,4 @@
 $(document).ready(function() {
-
-	// variables	
-	var numCorrect = 0; // storage for # correct answers
-	var curQ = 1;
-	var numQ = 4; 
-	var thisQ; // current question
-	var questionText = $(".quiz-area h3");
-	var questionChoices = $(".quiz_question-choices");
-	var qnum = curQ = " of " + numQ;
-
 	// establish 'question' class
 	function question(thequestion,choice1,choice2,choice3,choice4,correctChoice,correctBool) {
 		// |- questions 1,2,3,4
@@ -68,6 +58,14 @@ $(document).ready(function() {
 		return this.correctChoice;
 	};
 
+	// variables	
+	var numCorrect = 0; // storage for # correct answers
+	var curQ = 1;
+	var thisQ; // current question
+	var questionText = $(".quiz-area h3");
+	var questionChoices = $(".quiz_question-choices");
+	// var qnum = curQ + " of 4";
+
 	var startQuiz = function() {
 		// reset global variables
 		numCorrect = 0;
@@ -79,13 +77,11 @@ $(document).ready(function() {
 		questionChoices.show().empty();
 		$(".quiz-area img").attr("src","img/zero-temp.png");
 		$("body").addClass("winterbg");
+		$(".correctfinish").hide();
+		$(".missedfinish").hide();
 
-		// load question
-		questionText.append("Question " + qnum + ": " + thisQ.thequestion);
-		questionChoices.append("<li><p>" + thisQ.choice1 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice2 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice3 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice4 + "</p></li>");
+		// load questions
+		loadQuestions();
 
 		// |- reset thermometer
 		console.log("start");
@@ -98,13 +94,13 @@ $(document).ready(function() {
 		if (p.text() === c.text()) {
 			thisQ.correctBool = true;
 			p.addClass("correct");
-			console.log("Fuck yeah!");
+			console.log("Nailed it!");
 			numCorrect++;
 		} else {
 			thisQ.correctBool = false;
 			c.addClass("correct")
 			p.addClass("incorrect");
-			console.log("Aw shit");
+			console.log("Nope.");
 		}
 
 		// swap out graphics
@@ -125,7 +121,8 @@ $(document).ready(function() {
 
 	// click Continue to load new question
 	var continueQuiz = function() {
-		curQ++;
+		// increment question #
+		var curQ = curQ + 1;
 
 		// remove answers from ordered list
 		questionText.text("");
@@ -151,9 +148,19 @@ $(document).ready(function() {
 			}
 		}
 
+		// load questions
+		loadQuestions();
 	};
 
-
+	// load question
+	var loadQuestions = function() {
+		questionText.append("Question " + curQ + " of 4: " + thisQ.thequestion);
+		questionChoices.append("<li><p>" + thisQ.choice1 + "</p></li>");
+		questionChoices.append("<li><p>" + thisQ.choice2 + "</p></li>");
+		questionChoices.append("<li><p>" + thisQ.choice3 + "</p></li>");
+		questionChoices.append("<li><p>" + thisQ.choice4 + "</p></li>");
+		$("#continue").hide();
+	};
 
 
 	startQuiz();
@@ -176,6 +183,10 @@ $(document).ready(function() {
 		// set the 'question' object bolean and display continue
 		questionCheck(picked,correct);
 
+	});
+
+	$("#continue").click(function() {
+		continueQuiz();
 	});
 
 	// play again button
