@@ -1,9 +1,8 @@
 $(document).ready(function() {
 
 	// establish 'question' class
-	function question(thequestion,choice1,choice2,choice3,choice4,correctChoice) {
+	function question(choice1,choice2,choice3,choice4,correctChoice) {
 		// |- questions 1,2,3,4
-		this.thequestion = thequestion;
 		this.choice1 = choice1;
 		this.choice2 = choice2;
 		this.choice3 = choice3;
@@ -14,39 +13,35 @@ $(document).ready(function() {
 
 	// set up question objects
 	var question1 = new question(
-		"thequestion1",
-		"Question 1-1 this one",
-		"Question 1-2",
-		"Question 1-3",
-		"Question 1-4",
-		"Question 1-1 this one"
+		"A constant, large-scale cyclone at both poles of the Earth",
+		"The atmospheric effect of everyone in a region opening their freezers at once",
+		"A consistant ice storm that only effects certain continents",
+		"It's because of El Nino...",
+		"A constant, large-scale cyclone at both poles of the Earth"
 		);
 
 	var question2 = new question(
-		"thequestion2",
-		"Question 2-1",
-		"Question 2-2 this one",
-		"Question 2-3",
-		"Question 2-4",
-		"Question 2-2 this one"
+		"Clockwise",
+		"Counter-clockwise",
+		"Up",
+		"It's because of El Nino...",
+		"Counter-clockwise"
 		);
 
 	var question3 = new question(
-		"thequestion3",
-		"Question 3-1 this one",
-		"Question 3-2",
-		"Question 3-3",
-		"Question 3-4",
-		"Question 3-1 this one"
+		"Clockwise",
+		"Counter-clockwise",
+		"Down",
+		"It's because of El Nino...",
+		"Clockwise"
 		);
 
 	var question4 = new question(
-		"thequestion4",
-		"Question 4-1",
-		"Question 4-2",
-		"Question 4-3 this one",
-		"Question 4-4",
-		"Question 4-3 this one"
+		"The average frequency of opened freezers in each hemisphere",
+		"The average global temperature",
+		"The hemospheric season",
+		"It's because of El Nino...",
+		"The hemospheric season"
 		);
 
 	// variables
@@ -55,10 +50,15 @@ $(document).ready(function() {
 
 	// start quiz function
 	var startQuiz = function() {
+		// reset ui and variables
 		$(".question1").show()
+		numCorrect = 0;
 		currentQuestion = question1;
 		$(".correctfinish").hide();
 		$(".missedfinish").hide();
+
+		// reset graphics
+		$(".quiz-area img").attr("src","img/zero-temp.png");
 		$("body").removeClass("thawedbg");
 		$("body").addClass("winterbg");
 
@@ -93,9 +93,8 @@ $(document).ready(function() {
 			$(".quiz-area img").attr("src","img/fourty-temp.png");
 		} else if (numCorrect == 3) {
 			$(".quiz-area img").attr("src","img/sixty-temp.png");
-		} else if (numCorrect == 4) {
-			$("body").removeClass("winterbg");
-			$("body").addClass("thawedbg");
+		} else {
+			return false;
 		}
 
 	});
@@ -119,6 +118,8 @@ $(document).ready(function() {
 			$(".question4").hide();
 			if (numCorrect == 4) {
 				$(".correctfinish").show();
+				$("body").removeClass("winterbg");
+				$("body").addClass("thawedbg");
 			} else {
 				$(".missedfinish").show();
 			}
