@@ -178,7 +178,7 @@ a:link, a:visited, a:hover, a:link {color: #3E606F;}
   border-color: #8D9491;
 }
 
-.correctfinish, .missedfinish {text-align: center;}
+.correctfinish, .missedfinish, .continuearea p {text-align: center;}
 
 button {
   border-radius: .5em;
@@ -199,9 +199,17 @@ button:focus {
 }
 
 /* layout & theme */
+.question1, 
+.question1 .continuearea,
+.question2, 
+.question2 .continuearea,
+.question3, 
+.question3 .continuearea,
+.question4, 
+.question4 .continuearea,
 .correctfinish, 
-.missedfinish, 
-#continue {
+.missedfinish 
+{
   display: none;
 }
 

@@ -1,6 +1,7 @@
 $(document).ready(function() {
+
 	// establish 'question' class
-	function question(thequestion,choice1,choice2,choice3,choice4,correctChoice,correctBool) {
+	function question(thequestion,choice1,choice2,choice3,choice4,correctChoice) {
 		// |- questions 1,2,3,4
 		this.thequestion = thequestion;
 		this.choice1 = choice1;
@@ -9,189 +10,79 @@ $(document).ready(function() {
 		this.choice4 = choice4;
 		// |- correct answer
 		this.correctChoice = correctChoice;
-		// |- boolean for correct answer...default to false
-		this.correctBool = correctBool;
 	};
 
 	// set up question objects
 	var question1 = new question(
 		"thequestion1",
-		"question1-1 this one",
-		"question1-2",
-		"question1-3",
-		"question1-4",
-		"question1-1 this one",
-		false
-	);
+		"Question 1-1 this one",
+		"Question 1-2",
+		"Question 1-3",
+		"Question 1-4",
+		"Question 1-1 this one"
+		);
 
 	var question2 = new question(
 		"thequestion2",
-		"question2-1",
-		"question2-2 this one",
-		"question2-3",
-		"question2-4",
-		"question2-2 this one",
-		false
-	);
+		"Question 2-1",
+		"Question 2-2 this one",
+		"Question 2-3",
+		"Question 2-4",
+		"Question 2-2 this one"
+		);
 
 	var question3 = new question(
 		"thequestion3",
-		"question3-1 this one",
-		"question3-2",
-		"question3-3",
-		"question3-4",
-		"question3-1 this one",
-		false
-	);
+		"Question 3-1 this one",
+		"Question 3-2",
+		"Question 3-3",
+		"Question 3-4",
+		"Question 3-1 this one"
+		);
 
 	var question4 = new question(
 		"thequestion4",
-		"question4-1",
-		"question4-2",
-		"question4-3 this one",
-		"question4-4",
-		"question4-3 this one",
-		false
-	);
+		"Question 4-1",
+		"Question 4-2",
+		"Question 4-3 this one",
+		"Question 4-4",
+		"Question 4-3 this one"
+		);
 
-	question.prototype.theAnswer = function() {
-		return this.correctChoice;
-	};
+	// variables
+	currentQuestion = question1;
+	numCorrect = 0;
 
-	// variables	
-	var numCorrect = 0; // storage for # correct answers
-	var curQ = 1;
-	var thisQ; // current question
-	var questionText = $(".quiz-area h3");
-	var questionChoices = $(".quiz_question-choices");
-	// var qnum = curQ + " of 4";
-
+	// start quiz function
 	var startQuiz = function() {
-		// reset global variables
-		numCorrect = 0;
-		curQ = 1;
-		thisQ = question1;
-
-		// remove choices and question and reset image
-		questionText.show().text("");
-		questionChoices.show().empty();
-		$(".quiz-area img").attr("src","img/zero-temp.png");
-		$("body").addClass("winterbg");
-		$(".correctfinish").hide();
-		$(".missedfinish").hide();
-
-		// load questions
-		loadQuestions();
-
-		// |- reset thermometer
-		console.log("start");
+		$(".question1").show()
+		currentQuestion = question1;
 	};
-
-	var questionCheck = function(p,c) {
-		console.log("checking question...")
-
-		// check if correct
-		if (p.text() === c.text()) {
-			thisQ.correctBool = true;
-			p.addClass("correct");
-			console.log("Nailed it!");
-			numCorrect++;
-		} else {
-			thisQ.correctBool = false;
-			c.addClass("correct")
-			p.addClass("incorrect");
-			console.log("Nope.");
-		}
-
-		// swap out graphics
-		if (numCorrect == 1) {
-			$(".quiz-area img").attr("src","img/twenty-temp.png");
-		} else if (numCorrect == 2) {
-			$(".quiz-area img").attr("src","img/fourty-temp.png");
-		} else if (numCorrect == 3) {
-			$(".quiz-area img").attr("src","img/sixty-temp.png");
-		} else if (numCorrect == 4) {
-			$("body").removeClass("winterbg");
-			$("body").addClass("thawedbg");
-		}
-
-		// show Continue
-		$("#continue").show();
-	};
-
-	// click Continue to load new question
-	var continueQuiz = function() {
-		// increment question #
-		var curQ = curQ + 1;
-
-		// remove answers from ordered list
-		questionText.text("");
-		questionChoices.empty();
-
-		// |- load new answers
-		if (thisQ == question1) {
-			thisQ = question2;
-		} else if (thisQ == question2) {
-			thisQ = question3;
-		} else if (thisQ == question3) {
-			thisQ = question4;
-		} else {
-			// |- if no more questions show 'finish' div
-			questionText.hide();
-			questionChoices.hide();
-			$("#continue").hide();
-
-			if (numCorrect === numQ) {
-				$(".correctfinish").show();
-			} else {
-				$(".missedfinish").show();
-			}
-		}
-
-		// load questions
-		loadQuestions();
-	};
-
-	// load question
-	var loadQuestions = function() {
-		questionText.append("Question " + curQ + " of 4: " + thisQ.thequestion);
-		questionChoices.append("<li><p>" + thisQ.choice1 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice2 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice3 + "</p></li>");
-		questionChoices.append("<li><p>" + thisQ.choice4 + "</p></li>");
-		$("#continue").hide();
-	};
-
-
 	startQuiz();
 
-
-	$(".quiz_question-choices > li").click(function() {
-		event.preventDefault();
-
+	// chosen question
+	$(".quiz-area section li").click(function() {
 		var picked = $(this);
-		var correct;
+		var correct = currentQuestion.correctChoice;
 
-		$(".quiz_question-choices li").each(function() {
-			if ($(this).find("p").text() == thisQ.correctChoice) {
-				correct = $(this);
-			} else {
-				return false;
-			}
-		});
-
-		// set the 'question' object bolean and display continue
-		questionCheck(picked,correct);
+		// check if correct & add styles
+		if (picked.text() === correct) {
+			picked.parent("li").addClass("correct");
+			numCorrect++;
+		} else {
+			picked.addClass("incorrect");
+			$(".quiz-area section .continuearea").show().prepend("<p>Incorrect answer</p>");
+		}
 
 	});
 
-	$("#continue").click(function() {
-		continueQuiz();
-	});
+	// continue to next question
+	
 
-	// play again button
+	// start new quiz
 	$(".playagain").click(function() {
 		startQuiz();
 	});
+
 
 });
