@@ -59,6 +59,8 @@ $(document).ready(function() {
 		currentQuestion = question1;
 		$(".correctfinish").hide();
 		$(".missedfinish").hide();
+		$("body").removeClass("thawedbg");
+		$("body").addClass("winterbg");
 
 		// remove all classes
 		$(".quiz-area section li").each(function() {
@@ -82,6 +84,18 @@ $(document).ready(function() {
 			picked.addClass("incorrect");
 			$(".quiz-area .continuearea").show();
 			$(".quiz-area .continuearea p").text("Incorrect answer");
+		}
+
+		// change thermometer
+		if (numCorrect == 1) {
+			$(".quiz-area img").attr("src","img/twenty-temp.png");
+		} else if (numCorrect == 2) {
+			$(".quiz-area img").attr("src","img/fourty-temp.png");
+		} else if (numCorrect == 3) {
+			$(".quiz-area img").attr("src","img/sixty-temp.png");
+		} else if (numCorrect == 4) {
+			$("body").removeClass("winterbg");
+			$("body").addClass("thawedbg");
 		}
 
 	});
