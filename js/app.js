@@ -57,6 +57,13 @@ $(document).ready(function() {
 	var startQuiz = function() {
 		$(".question1").show()
 		currentQuestion = question1;
+		$(".correctfinish").hide();
+		$(".missedfinish").hide();
+
+		// remove all classes
+		$(".quiz-area section li").each(function() {
+			$(this).removeAttr("class");
+		});
 	};
 	startQuiz();
 
@@ -67,17 +74,44 @@ $(document).ready(function() {
 
 		// check if correct & add styles
 		if (picked.text() === correct) {
-			picked.parent("li").addClass("correct");
+			picked.addClass("correct");
 			numCorrect++;
+			$(".quiz-area .continuearea").show();
+			$(".quiz-area .continuearea p").text("Correct!");
 		} else {
 			picked.addClass("incorrect");
-			$(".quiz-area section .continuearea").show().prepend("<p>Incorrect answer</p>");
+			$(".quiz-area .continuearea").show();
+			$(".quiz-area .continuearea p").text("Incorrect answer");
 		}
 
 	});
 
 	// continue to next question
-	
+	$("#continue").click(function() {
+		// load next question
+		if (currentQuestion == question1) {
+			currentQuestion = question2;
+			$(".question1").hide();
+			$(".question2").show();
+		} else if (currentQuestion == question2) {
+			currentQuestion = question3;
+			$(".question2").hide();
+			$(".question3").show();
+		} else if (currentQuestion == question3) {
+			currentQuestion = question4;
+			$(".question3").hide();
+			$(".question4").show();
+		} else {
+			$(".question4").hide();
+			if (numCorrect == 4) {
+				$(".correctfinish").show();
+			} else {
+				$(".missedfinish").show();
+			}
+		}
+		$(".continuearea p").text("");
+		$(".continuearea").hide();
+	});
 
 	// start new quiz
 	$(".playagain").click(function() {

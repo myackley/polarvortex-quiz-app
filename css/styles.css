@@ -199,16 +199,13 @@ button:focus {
 }
 
 /* layout & theme */
-.question1, 
-.question1 .continuearea,
+.question1,
 .question2, 
-.question2 .continuearea,
 .question3, 
-.question3 .continuearea,
 .question4, 
-.question4 .continuearea,
 .correctfinish, 
-.missedfinish 
+.missedfinish, 
+.continuearea 
 {
   display: none;
 }
